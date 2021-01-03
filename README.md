@@ -192,7 +192,7 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
  <span style="color:blue">
 "Find examples where the TTC estimate of the Lidar sensor does not seem plausible. Describe your observations and provide a sound argumentation why you think this happened."</span>
 
-During computing the Camera-TTC , median was used. It is possible for two successive frames that previous median is equal to current median, and this will have a result TTC=NAN.When the detected Lidar points are distributed on wide on x-direction, the method of averaging the detected points will cause the TTC to jump as in the situation captured below. This could happen because of the calculated mean shifted far away than the actual closest point which will estimate more time for collision as the preceding vehicle get more far away.
+During computing the Camera-TTC , mean was used. It is possible for two successive frames that previous median is equal to current mean, and this will have a result TTC=NAN. When the detected Lidar points are distributed on wide on x-direction, the method of averaging the detected points will cause the TTC to jump as in the situation captured below. This could happen because of the calculated mean shifted far away than the actual closest point which will estimate more time for collision as the preceding vehicle get more far away.
 
 <img src="images/lidar_detection.png" width="1232" height="369" />
 
