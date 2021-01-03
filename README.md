@@ -191,15 +191,17 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
 
  <span style="color:blue">
 
-During computing the Camera-TTC , mean was used. It is possible for two successive frames that previous median is equal to current mean, and this will have a result TTC=NAN. When the detected Lidar points are distributed on wide on x-direction, the method of averaging the detected points will cause the TTC to jump as in the situation captured below. This could happen because of the calculated mean shifted far away than the actual closest point which will estimate more time for collision as the preceding vehicle get more far away.
+When the detected Lidar points are distributed on wide on x-direction, the method of averaging the detected points will cause the TTC to jump as in the situation captured below. This could happen because of the calculated mean shifted far away than the actual closest point which will estimate more time for collision as the preceding vehicle get more far away.
 
 <img src="images/lidar_detection.png" width="1232" height="369" />
 
 The reason could be because of the Lidar high resolution which makes it able to capture the curved edges of the vehicle which we are not interested in for this application.
 
 <span style="color:blue">
-Tables below are summarizes the performance of several combinations of different detectors and descriptors. Evaluation metrics are defined as the difference in time between TTC with Camera and Lidar. mainly focusing of detecting the frame at which max difference between the TTC calculated from lidar and camera occured. 
-So that we can see what's the maximum difference compared with several detector and descriptor combinations. And found that the FAST/BRIEF and SIFT/SIFT have the least difference in TTC computed. Furthermore, I presented also the average of the TTC calculated along the whole set of frames to ensure there is no much deviation to the lidar which might indicate the algorithm is not functioning correctly.
+Tables below summarizes the performance of several combinations of different detectors and descriptors. Several evaluation metrics are employed as presented in the columns of the table. To evaluate the performance of Camera and Lidar TTC, the mean abs difference between both (Camera and lidar) has been used.
+ With this methods, we can incur at which max/min difference between the TTC calculated from lidar and camera occured and know which combination of detector and descriptor performs the worst and best respectively. With iterating through all combinations, FAST/BRIEF and SIFT/SIFT have shown the least difference and FAST/FREAK and FAST/ORB have the largest residual in TTC computation. 
+
+Overall, the winners are ***FAST/BRIEF*** and ***SIFT/SIFT***.
 
 |Detector| Descriptor | Prev Image Frame  | Current Image Frame | Lidar TTC | Camera TTC | Difference in TTC | Lidar TTC Average | Camera TTC Average |
 |--------|------------|------------------|---------------------|-----------|------------|-------------------|-------------------|-------------------|
@@ -210,10 +212,13 @@ So that we can see what's the maximum difference compared with several detector 
 |SIFT|SIFT|2|3|16.3845|13.0962|3.28828|11.7444|11.6279|
 |FAST|FREAK|4|5|12.7299|5.98282|6.74713|11.7444|11.8134|
 
-TTC only based on camera is also not accurate enough. When the preceding car is more and more close to the ego car, the matchBoundingBoxes gives a big wrong result like the below image. When the bounding boxes overlaps a lot with each other, the function matchBoundingBoxes becomes invalid. I have tried my best , but have not found a valid way. Both TTC-computed methods are not enough when considering the Z dimensions which means the road is not flat. The algorithm computing TTC based on Lidar and camera is derived from Plane Trigonometry. If the road is not flat. the algorithm is invalid.
+<span style="color:blue">
+
+During computing the Camera-TTC, the mean for all keypoints was used. It is possible for two successive frames that previous mean is equal to current mean, and this will have a erroneuous result i.e TTC=NAN. Moreover, Camera-TTC is not reliable enough. When the preceding car is more and more close to the ego car, the matchBoundingBoxes gives a big wrong result like the below image. 
 
 <img src="images/faulty.png" width="1232" height="369" />
 
+When the bounding boxes overlaps a lot with each other, the function matchBoundingBoxes becomes invalid. I have tried my best , but have not found a valid way. Both TTC-computed methods are not enough when considering the Z dimensions which means the road is not flat. The algorithm computing TTC based on Lidar and camera is derived from Plane Trigonometry. If the road is not flat. the algorithm is invalid. 
 
 ## Dependencies for Running Locally
 * cmake >= 2.8
