@@ -194,7 +194,7 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
 
 During computing the Camera-TTC , median was used. It is possible for two successive frames that previous median is equal to current median, and this will have a result TTC=NAN.When the detected Lidar points are distributed on wide on x-direction, the method of averaging the detected points will cause the TTC to jump as in the situation captured below. This could happen because of the calculated mean shifted far away than the actual closest point which will estimate more time for collision as the preceding vehicle get more far away.
 
-<img src="doc/lidar_detection.png" width="1232" height="369" />
+<img src="images/lidar_detection.png" width="1232" height="369" />
 
 The reason could be because of the Lidar high resolution which makes it able to capture the curved edges of the vehicle which we are not interested in for this application.
 
@@ -217,6 +217,9 @@ I have checked with several combinations and presented below a table with the va
 
 Furthermore, 
 Besides, TTC only based on camera is also not accurate enough. When the preceding car is more and more close to the ego car, the matchBoundingBoxes gives a big wrong result like the below image. When the bounding boxes overlaps a lot with each other, the function matchBoundingBoxes becomes invalid. I have tried my best , but have not found a valid way. Both TTC-computed methods are not enough when considering the Z dimensions which means the road is not flat. The algorithm computing TTC based on Lidar and camera is derived from Plane Trigonometry. If the road is not flat. the algorithm is invalid.
+
+<img src="images/faulty.png" width="1232" height="369" />
+
 
 ## Dependencies for Running Locally
 * cmake >= 2.8
