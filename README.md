@@ -191,11 +191,12 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
 
  <span style="color:blue">
 
-When the detected Lidar points are distributed on wide on x-direction, the method of averaging the detected points will cause the TTC to jump as in the situation captured below. This could happen because of the calculated mean shifted far away than the actual closest point which will estimate more time for collision as the preceding vehicle get more far away.
+When the detected Lidar points are distributed on wide on x-direction, the method of averaging the detected points will cause the TTC to jump as in the situation captured below.
 
 <img src="images/lidar_detection.png" width="1232" height="369" />
 
-The reason could be because of the Lidar high resolution which makes it able to capture the curved edges of the vehicle which we are not interested in for this application.
+The reason is twofold. It could be because of the Lidar high resolution which makes it able to capture the curved edges of the vehicle which we are not interested in for this application. As the mean x-direction was used to compute of TTC, measurements are prone to outliers. Calculated mean shifted far away than the actual closest point which will estimate more time for collision as the preceding vehicle get more far away.
+We could mitigate this by incorporating the uncertainty and the motion model has not been incorporated into the system such as the Kalman Filter to reduce such errorneuos result from the noisy measurements.
 
 <span style="color:blue">
 Tables below summarizes the performance of several combinations of different detectors and descriptors. Several evaluation metrics are employed as presented in the columns of the table. To evaluate the performance of Camera and Lidar TTC, the mean abs difference between both (Camera and lidar) has been used.
