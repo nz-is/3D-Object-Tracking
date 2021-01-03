@@ -212,7 +212,7 @@ Tables below summarizes the performance of several combinations of different det
 
 <span style="color:blue">
 
-During computing the Camera-TTC, the mean for all keypoints was used. It is possible for two successive frames that previous mean is equal to current mean, and this will have a erroneuous result i.e TTC=NAN. Moreover, Camera-TTC is not reliable enough. When the preceding car is more and more close to the ego car, the Object Detection model gives a big wrong result like the below image and may cause an ID switch in each of the bounding boxes which is a quite common occurance in Computer Vision.
+During computing the Camera-TTC, the mean for all keypoints was used. It is possible for two successive frames that previous mean is equal to current mean, and this will have a erroneuous result i.e TTC=NAN. Moreover, Camera-TTC is not reliable enough. When the preceding car is more and more close to the ego car, the Object Detection model gives a big wrong result like the below image and may cause an ID switch to this new bounding box which is a quite common occurance in Computer Vision.
 
 <img src="images/faulty.png" width="1232" height="369" />
 
