@@ -198,7 +198,6 @@ When the detected Lidar points are distributed on wide on x-direction, the metho
 The reason is twofold. It could be because of the Lidar high resolution which makes it able to capture the curved edges of the vehicle which we are not interested in for this application. As the mean x-direction was used to compute of TTC, measurements are prone to outliers. Calculated mean shifted far away than the actual closest point which will estimate more time for collision as the preceding vehicle get more far away.
 We could mitigate this by incorporating the uncertainty and the motion model has not been incorporated into the system such as the Kalman Filter to reduce such errorneuos result from the noisy measurements.
 
-<span style="color:blue">
 Tables below summarizes the performance of several combinations of different detectors and descriptors. Several evaluation metrics are employed as presented in the columns of the table. To evaluate the performance of Camera and Lidar TTC, the mean abs difference between both (Camera and lidar) has been used.
  With this methods, we can incur at which max/min difference between the TTC calculated from lidar and camera occured and know which combination of detector and descriptor performs the worst and best respectively. With iterating through all combinations, FAST/BRIEF and SIFT/SIFT have shown the least difference and FAST/FREAK and FAST/ORB have the largest residual in TTC computation. Overall, the winners are **FAST/BRIEF** and **SIFT/SIFT**.
 
@@ -211,7 +210,7 @@ Tables below summarizes the performance of several combinations of different det
 |SIFT|SIFT|2|3|16.3845|13.0962|3.28828|11.7444|11.6279|
 |FAST|FREAK|4|5|12.7299|5.98282|6.74713|11.7444|11.8134|
 
-<span style="color:blue">
+<span style="color:blue"/>
 
 During computing the Camera-TTC, the mean for all keypoints was used. It is possible for two successive frames that previous mean is equal to current mean, and this will have a erroneuous result i.e TTC=NAN. Moreover, Camera-TTC is not reliable enough. When the preceding car is more and more close to the ego car, the Object Detection model gives a big wrong result like the below image and may cause an ID switch to this new bounding box which is a quite common occurance in Computer Vision.
 
