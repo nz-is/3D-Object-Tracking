@@ -199,9 +199,7 @@ The reason could be because of the Lidar high resolution which makes it able to 
 
 <span style="color:blue">
 Tables below summarizes the performance of several combinations of different detectors and descriptors. Several evaluation metrics are employed as presented in the columns of the table. To evaluate the performance of Camera and Lidar TTC, the mean abs difference between both (Camera and lidar) has been used.
- With this methods, we can incur at which max/min difference between the TTC calculated from lidar and camera occured and know which combination of detector and descriptor performs the worst and best respectively. With iterating through all combinations, FAST/BRIEF and SIFT/SIFT have shown the least difference and FAST/FREAK and FAST/ORB have the largest residual in TTC computation. 
-
-Overall, the winners are ***FAST/BRIEF*** and ***SIFT/SIFT***.
+ With this methods, we can incur at which max/min difference between the TTC calculated from lidar and camera occured and know which combination of detector and descriptor performs the worst and best respectively. With iterating through all combinations, FAST/BRIEF and SIFT/SIFT have shown the least difference and FAST/FREAK and FAST/ORB have the largest residual in TTC computation. Overall, the winners are ***FAST/BRIEF*** and ***SIFT/SIFT***.
 
 |Detector| Descriptor | Prev Image Frame  | Current Image Frame | Lidar TTC | Camera TTC | Difference in TTC | Lidar TTC Average | Camera TTC Average |
 |--------|------------|------------------|---------------------|-----------|------------|-------------------|-------------------|-------------------|
@@ -214,7 +212,7 @@ Overall, the winners are ***FAST/BRIEF*** and ***SIFT/SIFT***.
 
 <span style="color:blue">
 
-During computing the Camera-TTC, the mean for all keypoints was used. It is possible for two successive frames that previous mean is equal to current mean, and this will have a erroneuous result i.e TTC=NAN. Moreover, Camera-TTC is not reliable enough. When the preceding car is more and more close to the ego car, the matchBoundingBoxes gives a big wrong result like the below image. 
+During computing the Camera-TTC, the mean for all keypoints was used. It is possible for two successive frames that previous mean is equal to current mean, and this will have a erroneuous result i.e TTC=NAN. Moreover, Camera-TTC is not reliable enough. When the preceding car is more and more close to the ego car, the Object Detection model gives a big wrong result like the below image and may cause an ID switch in each of the bounding boxes which is a quite common occurance in Computer Vision.
 
 <img src="images/faulty.png" width="1232" height="369" />
 
