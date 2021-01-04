@@ -218,6 +218,17 @@ During computing the Camera-TTC, the mean for all keypoints was used. It is poss
 
 When the bounding boxes overlaps a lot with each other, the function matchBoundingBoxes becomes invalid. I have tried my best , but have not found a valid way. Both TTC-computed methods are not enough when considering the Z dimensions which means the road is not flat. The algorithm computing TTC based on Lidar and camera is derived from Plane Trigonometry. If the road is not flat. the algorithm is invalid. 
 
+### Analysis Frame by Frame
+
+Top rankings detector/descriptor combinations of from my Mid-term Project (FAST+SIFT, FAST/BRIEF, FAST/ORB, BRISK/BRISK, FAST+BRISK)were used to compute the TTC based on camera. From the successive frames, as we are moving towards and closer the preceding vehicle, the TTC monotonically decreasing in time. Below are the plots of ttcCamera against the frame no. based on the measurements on the csv files at ```results/*.csv```. 
+
+<img src="images/plots.png" width="1232" height="369" />
+
+
+From above chart, we can see that the TTC change trend is decreasing with the frames. I used minXpoint of lidar measurements between previous frame and current frame to compute TTC, even though pcl::StatisticalOutlierRemoval was used to remove outliers, the result is fluctuate greatly especially on frame 34. If we only make use of lidar point to compute TTC, this will result in faulty measurement. That is the reason the lidar measurements are inaccurate with white noise, and we can get more accurate result by filtering the noise with Kalman Filter.
+
+Besides, TTC only based on camera is also not accurate enough. When the preceding car is more and more close to the ego car, the matchBoundingBoxes gives a big wrong result like the below image. When the bounding boxes overlaps a lot with each other, the function matchBoundingBoxes becomes invalid. I have tried my best , but have not found a valid way. Both TTC-computed methods are not enough when considering the Z dimensions which means the road is not flat. The algorithm computing TTC based on Lidar and camera is derived from Plane Trigonometry. If the road is not flat. the algorithm is invalid.
+
 ## Dependencies for Running Locally
 * cmake >= 2.8
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
