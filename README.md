@@ -222,7 +222,7 @@ When the bounding boxes overlaps a lot with each other, the function matchBoundi
 
 For brevity, the top rankings detector/descriptor combinations of from my Mid-term Project (FAST+SIFT, FAST/BRIEF, FAST/ORB, BRISK/BRISK, FAST+BRISK) were used for analysis frame by frame TTC for Camera and Lidar. From the successive frames, as we are moving towards and closer the preceding vehicle, the TTC monotonically decreases in time. Below are the plots of TTC (sec) against the frame no. based on the measurements on the csv files at ```results/*.csv```. Source code on plots is at ```plots.ipynb```
 
-<img src="images/plots.png" />
+<img src="images/plots_2.png" />
 
 From above plot, we can see that there is a trend of the TTC decreasing as we travese through the remaining frames in the sequence (which imploes that we are moving closer to the preceding vehicle). Moreover, it can be seen that from the plots, with the BRISK/BRISK combination, the TTC fluates greatly at frame 5, that surges from 15s to 25s which defies the law of physics. As we are approaching close to the proceding vehicle, TTC must decrease in time. Based on this findings, BRISK/BRISK are likely to detect more noisy keypoints and shifted the mean euclidean distance, and contributes to the erroneous results and thus not suitable for this type of application.  
 
