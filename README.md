@@ -227,7 +227,7 @@ For brevity, the top rankings detector/descriptor combinations of from my Mid-te
 From above plot, we can see that there is a trend of the TTC decreasing as we travese through the remaining frames in the sequence (which imploes that we are moving closer to the preceding vehicle). Moreover, it can be seen that from the plots, with the BRISK/BRISK combination, the TTC fluates greatly at frame 5, that surges from 15s to 25s which defies the law of physics. As we are approaching close to the proceding vehicle, TTC must decrease in time. Based on this findings, BRISK/BRISK are likely to detect more noisy keypoints and shifted the mean euclidean distance, and contributes to the erroneous results and thus not suitable for this type of application.  
 
 Overall, all of the TTC computations are noisy and has fluactuation here and there, which can be smooth by using fusing this two sensors input onto the aforementioned Kalman Filter for state estimation to get a better estimate of the measurements. In comparison to all the TTC (Lidar and Camera) frame-by-frame, 
-FAST_BRIEF combinations (purple line) does come close to the measurement of the Lidar (yellow line) and hence the winner goes to *** FAST_BRIEF ***.
+FAST_BRIEF combinations (purple line) does come close to the measurement of the Lidar (yellow line) and hence the winner goes to ***FAST_BRIEF***.
 
 ## Dependencies for Running Locally
 * cmake >= 2.8
