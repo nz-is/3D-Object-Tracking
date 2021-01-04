@@ -193,7 +193,7 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
 
 When the detected Lidar points are distributed on wide on x-direction, the method of averaging the detected points will cause the TTC to jump as in the situation captured below.
 
-<img src="images/lidar_detection.png" width="1232" height="369" />
+<img src="images/lidar_detection.png" width="1232" height="400" />
 
 The reason is twofold. One, It could be because of the Lidar high resolution which makes it able to capture the curved edges of the vehicle which we are not interested in for this application. And two, As the mean x-direction was used to compute of TTC, measurements are prone to outliers. Calculated mean shifted far away than the actual closest point which will estimate more time for collision as the preceding vehicle get more far away.
 We could mitigate this by incorporating the uncertainty and the motion model has not been incorporated into the system such as the Kalman Filter to reduce such errorneuos result from the noisy measurements.
@@ -220,14 +220,14 @@ When the bounding boxes overlaps a lot with each other, the function matchBoundi
 
 ### Analysis Frame by Frame
 
-Top rankings detector/descriptor combinations of from my Mid-term Project (FAST+SIFT, FAST/BRIEF, FAST/ORB, BRISK/BRISK, FAST+BRISK)were used to compute the TTC based on camera. From the successive frames, as we are moving towards and closer the preceding vehicle, the TTC monotonically decreasing in time. Below are the plots of ttcCamera against the frame no. based on the measurements on the csv files at ```results/*.csv```. 
+For brevity, the top rankings detector/descriptor combinations of from my Mid-term Project (FAST+SIFT, FAST/BRIEF, FAST/ORB, BRISK/BRISK, FAST+BRISK) were used for analysis frame by frame TTC for Camera and Lidar. From the successive frames, as we are moving towards and closer the preceding vehicle, the TTC monotonically decreases in time. Below are the plots of TTC (sec) against the frame no. based on the measurements on the csv files at ```results/*.csv```. Source code on plots is at ```plots.ipynb```
 
-<img src="images/plots.png" width="1232" height="369" />
+<img src="images/plots.png" />
 
+From above plot, we can see that there is a trend of the TTC decreasing as we travese through the remaining frames in the sequence (which imploes that we are moving closer to the preceding vehicle). Moreover, it can be seen that from the plots, with the BRISK/BRISK combination, the TTC fluates greatly at frame 5, that surges from 15s to 25s which defies the law of physics. As we are approaching close to the proceding vehicle, TTC must decrease in time. Based on this findings, BRISK/BRISK are likely to detect more noisy keypoints and shifted the mean euclidean distance, and contributes to the erroneous results and thus not suitable for this type of application.  
 
-From above chart, we can see that the TTC change trend is decreasing with the frames. I used minXpoint of lidar measurements between previous frame and current frame to compute TTC, even though pcl::StatisticalOutlierRemoval was used to remove outliers, the result is fluctuate greatly especially on frame 34. If we only make use of lidar point to compute TTC, this will result in faulty measurement. That is the reason the lidar measurements are inaccurate with white noise, and we can get more accurate result by filtering the noise with Kalman Filter.
-
-Besides, TTC only based on camera is also not accurate enough. When the preceding car is more and more close to the ego car, the matchBoundingBoxes gives a big wrong result like the below image. When the bounding boxes overlaps a lot with each other, the function matchBoundingBoxes becomes invalid. I have tried my best , but have not found a valid way. Both TTC-computed methods are not enough when considering the Z dimensions which means the road is not flat. The algorithm computing TTC based on Lidar and camera is derived from Plane Trigonometry. If the road is not flat. the algorithm is invalid.
+Overall, all of the TTC computations are noisy and has fluactuation here and there, which can be smooth by using fusing this two sensors input onto the aforementioned Kalman Filter for state estimation to get a better estimate of the measurements. In comparison to all the TTC (Lidar and Camera) frame-by-frame, 
+FAST_BRIEF combinations (purple line) does come close to the measurement of the Lidar (yellow line) and hence the winner goes to *** FAST_BRIEF ***.
 
 ## Dependencies for Running Locally
 * cmake >= 2.8
